@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة التراث - Classic Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', 'Traditional Arabic', serif;
+        }
+        
+        :root {
+            --parchment: #f5e8c8;
+            --ink: #2c1810;
+            --gold: #8B6914;
+            --shadow: rgba(44, 24, 16, 0.3);
+        }
+        
+        body {
+            background: var(--parchment);
+            min-height: 100vh;
+            padding: 0;
+            color: var(--ink);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238b6914' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* الهيدر الرئيسي */
+        .main-header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 3px double var(--ink);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .main-header::before, .main-header::after {
+            content: "❦";
+            position: absolute;
+            bottom: -12px;
+            color: var(--gold);
+            font-size: 1.5em;
+        }
+        
+        .main-header::before { left: 20%; }
+        .main-header::after { right: 20%; }
+        
+        .main-header h1 {
+            font-size: 3.5em;
+            color: var(--ink);
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 3px;
+        }
+        
+        .main-header .subtitle {
+            font-size: 1.3em;
+            color: var(--gold);
+            font-style: italic;
+        }
+        
+        .admin-access {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .admin-btn {
+            background: var(--ink);
+            color: var(--parchment);
+            border: 1px solid var(--ink);
+            padding: 8px 16px;
+            font-size: 0.9em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            background: var(--parchment);
+            color: var(--ink);
+        }
+        
+        /* شريط البحث */
+        .search-section {
+            background: rgba(44, 24, 16, 0.05);
+            padding: 25px;
+            border: 1px solid var(--gold);
+            margin-bottom: 30px;
+            border-radius: 2px;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--gold);
+            background: var(--parchment);
+            font-size: 1.1em;
+            color: var(--ink);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--ink);
+        }
+        
+        .search-btn {
+            background: var(--ink);
+            color: var(--parchment);
+            border: 1px solid var(--ink);
+            padding: 0 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border: 1px solid var(--gold);
+            background: var(--parchment);
+            color: var(--ink);
+            font-size: 1em;
+        }
+        
+        /* شبكة الكتب */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .book-card {
+            background: var(--parchment);
+            border: 1px solid var(--gold);
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 3px 3px 8px var(--shadow);
+        }
+        
+        .book-card::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(139, 105, 20, 0.3);
+            pointer-events: none;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 15px var(--shadow);
+        }
+        
+        .book-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--parchment), var(--gold));
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gold);
+        }
+        
+        .book-cover img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        
+        .book-cover .cover-placeholder {
+            color: var(--ink);
+            font-size: 3em;
+            opacity: 0.3;
+        }
+        
+        .upload-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(44, 24, 16, 0.8);
+            color: var(--parchment);
+            border: none;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+        
+        .book-title {
+            font-size: 1.3em;
+            color: var(--ink);
+            margin-bottom: 8px;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+        
+        .book-author {
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+        
+        .book-category {
+            display: inline-block;
+            background: var(--ink);
+            color: var(--parchment);
+            padding: 3px 8px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        
+        .book-price {
+            font-size: 1.4em;
+            color: var(--ink);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .book-stock {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .stock-out {
+            color: #8B0000;
+            font-weight: bold;
+        }
+        
+        .order-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--ink);
+            color: var(--parchment);
+            border: 1px solid var(--ink);
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .order-btn:hover:not(:disabled) {
+            background: var(--parchment);
+            color: var(--ink);
+        }
+        
+        .order-btn:disabled {
+            background: #ccc;
+            border-color: #999;
+            color: #666;
+            cursor: not-allowed;
+        }
+        
+        /* نموذج الطلب */
+        .order-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 24, 16, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .order-form {
+            background: var(--parchment);
+            padding: 30px;
+            border: 2px solid var(--ink);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--ink);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--ink);
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gold);
+            background: var(--parchment);
+            color: var(--ink);
+            font-size: 1em;
+        }
+        
+        .submit-order {
+            width: 100%;
+            padding: 12px;
+            background: var(--ink);
+            color: var(--parchment);
+            border: 1px solid var(--ink);
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        
+        /* لوحة الإدارة */
+        .admin-panel {
+            display: none;
+            background: var(--parchment);
+            padding: 30px;
+            border: 2px solid var(--ink);
+            margin-top: 30px;
+        }
+        
+        .admin-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--gold);
+        }
+        
+        .admin-section h3 {
+            color: var(--ink);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 5px;
+        }
+        
+        .category-management {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .category-management input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--gold);
+            background: var(--parchment);
+        }
+        
+        .add-category-btn {
+            background: var(--ink);
+            color: var(--parchment);
+            border: 1px solid var(--ink);
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        
+        .categories-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .category-tag {
+            background: var(--ink);
+            color: var(--parchment);
+            padding: 5px 10px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .remove-category {
+            background: none;
+            border: none;
+            color: var(--parchment);
+            cursor: pointer;
+        }
+        
+        .book-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .book-form .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .add-book-btn {
+            background: var(--ink);
+            color: var(--parchment);
+            border: 1px solid var(--ink);
+            padding: 12px 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+        }
+        
+        .books-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--gold);
+            padding: 15px;
+        }
+        
+        .book-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid rgba(139, 105, 20, 0.3);
+        }
+        
+        .book-item:last-child {
+            border-bottom: none;
+        }
+        
+        .delete-book {
+            background: #8B0000;
+            color: var(--parchment);
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        
+        /* التذييل */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 3px double var(--ink);
+            margin-top: 50px;
+            color: var(--gold);
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-header h1 {
+                font-size: 2.5em;
+            }
+            
+            .admin-access {
+                position: static;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .book-form .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الصفحة الرئيسية -->
+        <div id="mainPage">
+            <!-- الهيدر -->
+            <header class="main-header">
+                <div class="admin-access">
+                    <button class="admin-btn" onclick="showAdminPanel()">
+                        <i class="fas fa-key"></i> دخول الإدارة
+                    </button>
+                </div>
+                <h1>مكتبة التراث</h1>
+                <div class="subtitle">Classic Library - منذ ١٩٥٠</div>
+            </header>
+
+            <!-- شريط البحث -->
+            <section class="search-section">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="ابحث عن كتاب أو مؤلف...">
+                    <button class="search-btn" onclick="searchBooks()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="filters">
+                    <select class="filter-select" id="categoryFilter" onchange="filterBooks()">
+                        <option value="">جميع التصنيفات</option>
+                    </select>
+                    <select class="filter-select" id="sortSelect" onchange="sortBooks()">
+                        <option value="title">ترتيب أبجدي</option>
+                        <option value="price-asc">السعر: من الأقل للأعلى</option>
+                        <option value="price-desc">السعر: من الأعلى للأقل</option>
+                        <option value="author">حسب المؤلف</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- قائمة الكتب -->
+            <div class="books-grid" id="booksGrid">
+                <!-- الكتب تُعرض هنا ديناميكياً -->
+            </div>
+
+            <!-- التذييل -->
+            <footer class="footer">
+                "خير جليس في الزمان كتاب" - مكتبة التراث © 2024
+            </footer>
+        </div>
+
+        <!-- لوحة الإدارة -->
+        <div id="adminPanel" class="admin-panel">
+            <button class="admin-btn" onclick="showMainPage()" style="margin-bottom: 20px;">
+                <i class="fas fa-arrow-right"></i> العودة للمتجر
+            </button>
+
+            <!-- إدارة التصنيفات -->
+            <div class="admin-section">
+                <h3><i class="fas fa-tags"></i> إدارة التصنيفات</h3>
+                <div class="category-management">
+                    <input type="text" id="newCategoryInput" placeholder="اسم التصنيف الجديد">
+                    <button class="add-category-btn" onclick="addCategory()">إضافة تصنيف</button>
+                </div>
+                <div class="categories-list" id="categoriesList">
+                    <!-- التصنيفات تُعرض هنا -->
+                </div>
+            </div>
+
+            <!-- إضافة كتاب جديد -->
+            <div class="admin-section">
+                <h3><i class="fas fa-book-medical"></i> إضافة كتاب جديد</h3>
+                <form class="book-form" id="bookForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>اسم الكتاب</label>
+                            <input type="text" id="bookTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>المؤلف</label>
+                            <input type="text" id="bookAuthor" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>التصنيف</label>
+                            <select id="bookCategory" required>
+                                <option value="">اختر التصنيف</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>السعر (جنيه)</label>
+                            <input type="number" id="bookPrice" min="1" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>الكمية المتاحة</label>
+                            <input type="number" id="bookQuantity" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>رفع صورة (اختياري)</label>
+                            <input type="file" id="bookImage" accept="image/*" onchange="previewImage(this)">
+                        </div>
+                    </div>
+                    <button type="submit" class="add-book-btn">
+                        <i class="fas fa-plus-circle"></i> إضافة الكتاب
+                    </button>
+                </form>
+            </div>
+
+            <!-- قائمة الكتب في الإدارة -->
+            <div class="admin-section">
+                <h3><i class="fas fa-books"></i> إدارة الكتب</h3>
+                <div class="books-list" id="adminBooksList">
+                    <!-- قائمة الكتب في الإدارة -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الطلب -->
+    <div class="order-modal" id="orderModal">
+        <div class="order-form">
+            <button class="close-btn" onclick="closeOrderModal()">×</button>
+            <h3 style="text-align: center; margin-bottom: 20px; color: var(--ink);">
+                طلب كتاب: <span id="selectedBookTitle"></span>
+            </h3>
+            <div class="form-group">
+                <label>اسمك الكريم</label>
+                <input type="text" id="customerName" placeholder="الاسم بالكامل">
+            </div>
+            <div class="form-group">
+                <label>رقم الهاتف</label>
+                <input type="tel" id="customerPhone" placeholder="01033877216">
+            </div>
+            <div class="form-group">
+                <label>العنوان (اختياري)</label>
+                <input type="text" id="customerAddress" placeholder="عنوان التوصيل">
+            </div>
+            <button class="submit-order" onclick="submitOrder()">
+                <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // البيانات
+        let books = JSON.parse(localStorage.getItem('classicBooks')) || [];
+        let categories = JSON.parse(localStorage.getItem('classicCategories')) || [
+            "أدب عربي", "أدب عالمي", "تاريخ", "فلسفة", "علوم", 
+            "شعر", "روائع", "مخطوطات", "تراث"
+        ];
+        let currentBook = null;
+
+        // الحفظ في التخزين المحلي
+        function saveData() {
+            localStorage.setItem('classicBooks', JSON.stringify(books));
+            localStorage.setItem('classicCategories', JSON.stringify(categories));
+        }
+
+        // تحديث واجهة التصنيفات
+        function updateCategoryUI() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            const bookCategory = document.getElementById('bookCategory');
+            const categoriesList = document.getElementById('categoriesList');
+
+            // تحديث القوائم المنسدلة
+            categoryFilter.innerHTML = '<option value="">جميع التصنيفات</option>';
+            bookCategory.innerHTML = '<option value="">اختر التصنيف</option>';
+            
+            categories.forEach(category => {
+                categoryFilter.innerHTML += `<option value="${category}">${category}</option>`;
+                bookCategory.innerHTML += `<option value="${category}">${category}</option>`;
+            });
+
+            // تحديث قائمة التصنيفات
+            categoriesList.innerHTML = '';
+            categories.forEach((category, index) => {
+                categoriesList.innerHTML += `
+                    <div class="category-tag">
+                        ${category}
+                        <button class="remove-category" onclick="removeCategory(${index})">×</button>
+                    </div>
+                `;
+            });
+        }
+
+        // إضافة تصنيف جديد
+        function addCategory() {
+            const input = document.getElementById('newCategoryInput');
+            const newCategory = input.value.trim();
+            
+            if (newCategory && !categories.includes(newCategory)) {
+                categories.push(newCategory);
+                saveData();
+                updateCategoryUI();
+                input.value = '';
+            }
+        }
+
+        // إزالة تصنيف
+        function removeCategory(index) {
+            if (confirm('هل تريد حذف هذا التصنيف؟')) {
+                categories.splice(index, 1);
+                saveData();
+                updateCategoryUI();
+            }
+        }
+
+        // معاينة الصورة
+        function previewImage(input) {
+            // سيتم رفع الصورة مباشرة عند إضافة الكتاب
+        }
+
+        // إضافة كتاب جديد
+        document.getElementById('bookForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('bookTitle').value;
+            const author = document.getElementById('bookAuthor').value;
+            const category = document.getElementById('bookCategory').value;
+            const price = parseInt(document.getElementById('bookPrice').value);
+            const quantity = parseInt(document.getElementById('bookQuantity').value);
+            const imageInput = document.getElementById('bookImage');
+            
+            let imageData = '';
+            
+            // معالجة رفع الصورة
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageData = e.target.result;
+                    addBookToSystem(title, author, category, price, quantity, imageData);
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                addBookToSystem(title, author, category, price, quantity, '');
+            }
+        });
+
+        function addBookToSystem(title, author, category, price, quantity, imageData) {
+            const newBook = {
+                id: Date.now(),
+                title: title,
+                author: author,
+                category: category,
+                price: price,
+                quantity: quantity,
+                image: imageData,
+                dateAdded: new Date().toLocaleDateString('ar-EG')
+            };
+            
+            books.push(newBook);
+            saveData();
+            displayBooks();
+            displayAdminBooks();
+            document.getElementById('bookForm').reset();
+            alert('✓ تم إضافة الكتاب بنجاح');
+        }
+
+        // عرض الكتب في المتجر
+        function displayBooks() {
+            const booksGrid = document.getElementById('booksGrid');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            const sortBy = document.getElementById('sortSelect').value;
+
+            let filteredBooks = books.filter(book => {
+                const matchesSearch = book.title.toLowerCase().includes(searchTerm) || 
+                                   book.author.toLowerCase().includes(searchTerm);
+                const matchesCategory = !selectedCategory || book.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            // الترتيب
+            filteredBooks.sort((a, b) => {
+                switch(sortBy) {
+                    case 'price-asc': return a.price - b.price;
+                    case 'price-desc': return b.price - a.price;
+                    case 'author': return a.author.localeCompare(b.author);
+                    default: return a.title.localeCompare(b.title);
+                }
+            });
+
+            booksGrid.innerHTML = '';
+
+            if (filteredBooks.length === 0) {
+                booksGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--gold);">
+                        <i class="fas fa-book-open" style="font-size: 3em; margin-bottom: 15px;"></i>
+                        <h3>لا توجد كتب تطابق معايير البحث</h3>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredBooks.forEach(book => {
+                const isOutOfStock = book.quantity === 0;
+                const stockClass = isOutOfStock ? 'stock-out' : '';
+                
+                const bookCard = `
+                    <div class="book-card">
+                        <div class="book-cover">
+                            ${book.image ? 
+                                `<img src="${book.image}" alt="${book.title}">` : 
+                                `<div class="cover-placeholder">📖</div>`
+                            }
+                        </div>
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">${book.author}</p>
+                        <span class="book-category">${book.category}</span>
+                        <p class="book-price">${book.price} جنيه</p>
+                        <p class="book-stock ${stockClass}">
+                            ${isOutOfStock ? 'غير متاح' : `المتاح: ${book.quantity} نسخة`}
+                        </p>
+                        <button class="order-btn" onclick="openOrderModal(${book.id})" ${isOutOfStock ? 'disabled' : ''}>
+                            ${isOutOfStock ? 'غير متاح' : 'طلب الكتاب'}
+                        </button>
+                    </div>
+                `;
+                booksGrid.innerHTML += bookCard;
+            });
+        }
+
+        // عرض الكتب في لوحة الإدارة
+        function displayAdminBooks() {
+            const booksList = document.getElementById('adminBooksList');
+            booksList.innerHTML = '';
+
+            books.forEach(book => {
+                const bookItem = `
+                    <div class="book-item">
+                        <div>
+                            <strong>${book.title}</strong> - ${book.author}
+                            <br><small>${book.category} | ${book.price} جنيه | ${book.quantity} نسخة</small>
+                        </div>
+                        <button class="delete-book" onclick="deleteBook(${book.id})">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>
+                    </div>
+                `;
+                booksList.innerHTML += bookItem;
+            });
+        }
+
+        // حذف كتاب
+        function deleteBook(bookId) {
+            if (confirm('هل تريد حذف هذا الكتاب؟')) {
+                books = books.filter(book => book.id !== bookId);
+                saveData();
+                displayBooks();
+                displayAdminBooks();
+            }
+        }
+
+        // فتح نافذة الطلب
+        function openOrderModal(bookId) {
+            currentBook = books.find(book => book.id === bookId);
+            document.getElementById('selectedBookTitle').textContent = currentBook.title;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        // إغلاق نافذة الطلب
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        // إرسال الطلب
+        function submitOrder() {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+
+            if (!name || !phone) {
+                alert('⚠️ يرجى填写 الاسم ورقم الهاتف');
+                return;
+            }
+
+            const message = `السلام عليكم ورحمة الله 🌹
+
+طلب كتاب جديد:
+📖 الكتاب: ${currentBook.title}
+✍️ المؤلف: ${currentBook.author}
+🏷️ التصنيف: ${currentBook.category}
+💎 السعر: ${currentBook.price} جنيه
+👤 الاسم: ${name}
+📞 الهاتف: ${phone}
+${address ? `📍 العنوان: ${address}` : ''}
+
+نرجو التأكيد والتواصل لتحديد موعد التسليم.`;
+
+            const whatsappUrl = `https://wa.me/201033877216?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            // تقليل الكمية
+            currentBook.quantity--;
+            saveData();
+            displayBooks();
+            displayAdminBooks();
+
+            // إغلاق النافذة وإعادة التعيين
+            closeOrderModal();
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerAddress').value = '';
+
+            alert('شكراً لك! تم إرسال طلبك بنجاح 📚');
+        }
+
+        // البحث والتصفية
+        function searchBooks() {
+            displayBooks();
+        }
+
+        function filterBooks() {
+            displayBooks();
+        }
+
+        function sortBooks() {
+            displayBooks();
+        }
+
+        // التنقل بين الصفحات
+        function showAdminPanel() {
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            displayAdminBooks();
+            updateCategoryUI();
+        }
+
+        function showMainPage() {
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('mainPage').style.display = 'block';
+            displayBooks();
+        }
+
+        // البحث أثناء الكتابة
+        document.getElementById('searchInput').addEventListener('input', displayBooks);
+
+        // التهيئة
+        function initialize() {
+            // إضافة بعض الكتب الافتراضية إذا لم تكن موجودة
+            if (books.length === 0) {
+                books = [
+                    {
+                        id: 1,
+                        title: "ديوان المتنبي",
+                        author: "أبو الطيب المتنبي",
+                        category: "شعر",
+                        price: 75,
+                        quantity: 5,
+                        image: "",
+                        dateAdded: "2024-01-01"
+                    },
+                    {
+                        id: 2,
+                        title: "كليلة ودمنة",
+                        author: "ابن المقفع",
+                        category: "أدب عربي",
+                        price: 60,
+                        quantity: 8,
+                        image: "",
+                        dateAdded: "2024-01-01"
+                    },
+                    {
+                        id: 3,
+                        title: "الأيام",
+                        author: "طه حسين",
+                        category: "أدب عربي",
+                        price: 45,
+                        quantity: 0,
+                        image: "",
+                        dateAdded: "2024-01-01"
+                    }
+                ];
+                saveData();
+            }
+            
+            displayBooks();
+            updateCategoryUI();
+        }
+
+        // بدء التطبيق
+        initialize();
+    </script>
+</body>
+</html>
